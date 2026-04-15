@@ -25,12 +25,8 @@ export default function VideoRecorder() {
       const formData = new FormData();
       formData.append('video', videoBlob, 'recorded_session.webm');
       const result = await axios.post('http://localhost:5000/predict', formData);
-
-      toast.success(`ZenithView detected: ${result.data.emotion}`);
-
-      setTimeout(() => {
-        navigate("/", { state: { result: result.data } });
-      }, 2000);
+      const { dominant_emotion, timeline,ai_feedback } =result.data;
+       navigate("/results", { state: { dominant_emotion,timeline,ai_feedback } });
     } catch (error) {
       console.error("Analysis Error:", error);
       toast.error("Backend analysis failed.");

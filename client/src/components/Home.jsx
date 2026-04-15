@@ -31,9 +31,8 @@ export default function Home() {
           'Content-Type': 'multipart/form-data',
         },
       });
-      const { dominant_emotion, timeline } = response.data;
-      console.log("dominant emtion:",dominant_emotion)
-      navigate('/results', { state: { dominant_emotion, timeline } });
+      const { dominant_emotion, timeline,ai_feedback } = response.data;
+      navigate('/results', { state: { dominant_emotion, timeline,ai_feedback} });
       setVideoPreview(null);
     } catch (error) {
       console.error("Upload Error:", error);
@@ -42,19 +41,15 @@ export default function Home() {
       setIsLoading(false);
     }
   };
-
   return (
     <div className="min-h-screen bg-slate-900 text-white font-sans">
       <ToastContainer />
       <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="video/*" className="hidden" />
-      
       <h1 className="pt-10 text-center text-5xl md:text-7xl font-extrabold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
         ZenithView
       </h1>
-
       <div className="flex flex-col items-center justify-center mt-10 px-4">
         <div className="w-full max-w-md bg-slate-800/50 border border-slate-700 backdrop-blur-xl rounded-3xl p-8 shadow-2xl">
-          
           {!videoPreview ? (
             <div className="group relative border-2 border-dashed border-slate-600 rounded-2xl p-10 transition-all hover:border-blue-500 hover:bg-slate-700/30 flex flex-col items-center justify-center">
               <Upload className="w-12 h-12 text-slate-400 group-hover:text-blue-400 mb-4 transition-colors" />
